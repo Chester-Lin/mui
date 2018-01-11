@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<style type="text/css">
+			#newsContent{
+				
+				margin-top: 48px;
+				padding: 15px;
+				line-height: 1.8em;
+				padding-bottom: 50px;
+			}
+			#newsContent img{
+				width: 100%;
+			}
+			#shareBox{
+				width: 100%;
+				height: 50px;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				background: white;
+			}
+			#share{
+				float: right;
+				width: 50px;
+				height: 40px;
+				margin: 5px;
+			}
+			#share img{
+				width: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content" id="newsContent">
+		    
+		</div>
+		<div id="shareBox">
+			<div id="share">
+				<img src="../img/20171024152056.png" />
+			</div>
+		</div>
+	</body>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+				mui.init();
+				
+				var shareInfo = null;
+				mui.plusReady(function(){
+			//  获得点击的id值
+					var _self = plus.webview.currentWebview();
+					var nid   = _self.newid;
+			//  get请求获取 内容添加到网页中		
+					mui.get('http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=info&id='+nid,
+					function(data){
+						//	console.log(data);
+						oContent = JSON.parse(data);
+						mui('#newsContent')[0].innerHTML = oContent.content;
+						mui('.mui-title')[0].innerHTML = oContent.title;
+						shareInfo = JSON.parse(data);
+						}
+					);
+				})
+			//  点击图片分享	
+				mui('#share')[0].addEventListener('tap',function(){
+					var actionButtons = [{title:'微信好友'},{title:'朋友圈'},{title:'QQ'}];
+					var actionsheetstyle = {title:'请选择分享',cancel:'取消',buttons:actionButtons};
+					plus.nativeUI.actionSheet(actionsheetstyle,function(e){
+						//console.log(JSON.stringify(e));
+						if (e.index>0) {
+							share(e.index);
+						}
+					})
+				});
+				
+			// 分享方法	
+				function share(type){
+					plus.share.getServices(function(services){
+						//console.log(JSON.stringify(services));
+						var wxshare = null;
+						var qqshare = null;
+						
+						for (var k in services) {
+							if (services[k].id=='weixin') {
+							wxshare = services[k];	
+							}
+							if (services[k].id=='qq') {
+							qqshare = services[k];	
+							}
+						}
+					//根据选择的按钮执行相应的分享方法	
+						if (type==3) {
+							console.log(JSON.stringify(qqshare));							
+							if ( qqshare==null ) {mui.toast('未安装QQ或者未授权认证');return;}
+							qqShare(qqshare);
+						}else{
+							console.log(JSON.stringify(wxshare));
+							if ( wxshare==null ) {mui.toast('未安装微信或者未授权认证');return;}
+							weixinShare(type);
+						}
+
+					function weixinShare(type){
+					// 发送分享内容
+						var msg = {
+							title:shareInfo.title,
+							content:shareInfo.title,
+							href:'https://son.chester-lin.xin'
+						};
+						if ( type == 1 ) {
+					 // 发送目标场景 ：  微信好友对话  WXSceneSession
+							msg.extra = {scene:"WXSceneSession"}
+						} else if( type == 2 ){
+					 // 发送目标场景 ： 微信朋友圈  WXSceneTimeline
+							msg.extra = {scene:"WXSceneTimeline"}
+						}
+						
+						wxshare.send(msg,function(){
+							mui.toast('分享成功');
+						},function(e){
+							mui.toast('分享失败或者您取消分享'+"---"+e.message);
+						});
+					}
+					
+					function qqShare(qq){
+/*					interface plus.share.Authorize {
+						// Methods
+						function void load( id );
+						function void setVisible( visible );
+					
+						// Events
+						function void onloaded();
+						function void onauthenticated();
+						function void onerror();
+					}	*/
+					
+					if (qq.authenticated==false) {
+							qq.authorize(function(){
+								//mui.toast('授权成功');
+							},function(e){
+								mui.toast('授权失败');
+							});
+					}
+					// 发送分享内容
+						var msg = {
+							title:shareInfo.title,
+							content:shareInfo.title,
+							href:'https://son.chester-lin.xin'
+						};
+						
+						qqshare.send(msg,function(){
+							mui.toast('分享成功');
+						},function(e){
+							mui.toast('分享失败或者您取消分享'+"---"+e.message);
+						});
+					
+						
+					}
+					
+					
+						
+					},function(e){
+						mui.toast('获取分享服务列表失败'+e.message);
+					});
+				}
+		</script>
+</html>

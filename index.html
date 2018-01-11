@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/h.js"></script>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.css" rel="stylesheet"/>
+    <link href="css/iconfont.css" rel="stylesheet"/>
+	<style type="text/css">
+		.icon {
+		   width: 1em; height: 1em;
+		   vertical-align: -0.15em;
+		   fill: currentColor;
+		   overflow: hidden;
+		}
+	</style>
+	<script type="text/javascript" src="js/iconfont.js"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav mui-text-center" style="background: #87cefa;" id="title1">
+		    <a class="mui-tab-item mui-pull-left">
+		        <span class="mui-icon">
+		        	<svg class="icon" aria-hidden="true">
+					  <use xlink:href="#icon-flat"></use>
+					</svg>
+		        </span>
+	    	</a>
+	    	<div class="mui-input-row mui-search" style="width: 75%;display: inline-block;margin-top: 2px;">
+	    	    <input type="search" class="mui-input-clear" placeholder="搜索文章">
+	    	</div>
+	    	<a class="mui-tab-item mui-pull-right" href="#sheet1">
+		        <span class="mui-icon">
+		        	<svg class="icon" aria-hidden="true">
+					  <use xlink:href="#icon-HotAirBalloon"></use>
+					</svg>
+		        </span>
+	    	</a>
+	</header>
+	<!--<header class="mui-bar mui-bar-nav" id="title2"  style="background: #87cefa;">
+		    <a class="mui-tab-item mui-pull-right" href="#sheet1">
+		        <span class="mui-icon">
+		        	<svg class="icon" aria-hidden="true">
+					  <use xlink:href="#icon-HotAirBalloon"></use>
+					</svg>
+		        </span>
+	    	</a>
+	</header>-->
+	<nav class="mui-bar mui-bar-tab" id="navFooter">
+	    <a class="mui-tab-item  mui-active" id="sub1">
+	        <span class="mui-icon">
+	        	<svg class="icon" aria-hidden="true">
+				  <use xlink:href="#icon-home"></use>
+				</svg>
+	        </span>
+	        <span class="mui-tab-label">主页</span>
+	    </a>
+	    <a class="mui-tab-item" id="sub2">
+	        <span class="mui-icon">
+	        	<svg class="icon" aria-hidden="true">
+				  <use xlink:href="#icon-talk"></use>
+				</svg>
+	        </span>
+	        <span class="mui-tab-label">消息</span>
+	    </a>
+	    <a class="mui-tab-item" id="sub3">
+	        <span class="mui-icon">
+	        	<svg class="icon" aria-hidden="true">
+				  <use xlink:href="#icon-star"></use>
+				</svg>
+	        </span>
+	        <span class="mui-tab-label">收藏</span>
+	    </a>
+	    <a class="mui-tab-item" id="sub4">
+	        <span class="mui-icon">
+	        	<svg class="icon" aria-hidden="true">
+				  <use xlink:href="#icon-Magnifier"></use>
+				</svg>
+	        </span>
+	        <span class="mui-tab-label">发现</span>
+	    </a>
+	    <a class="mui-tab-item" id="sub5">
+	        <span class="mui-icon">
+	        	<svg class="icon" aria-hidden="true">
+				  <use xlink:href="#icon-light"></use>
+				</svg>
+	        </span>
+	        <span class="mui-tab-label">我的</span>
+	    </a>
+	</nav>
+	<div id="sheet1" class="mui-popover mui-popover-bottom  mui-popover-action" style="z-index: 999999;">
+		<!-- 可选择菜单 -->
+		<ul class="mui-table-view">
+		    <li class="mui-table-view-cell">
+		       <a href="javascript:wxlogin();">微信登录</a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		       <a href="javascript:qqlogin();">QQ登录</a>
+		    </li>
+		</ul>
+	</div>
+</body>
+	<script type="text/javascript" charset="utf-8">
+      	mui.init({
+      		subpages:[{
+      			url : "sub/sub1.html",
+      			id  : "sub/sub1.html",
+      			styles : {
+      				top:"44px",
+      				bottom : "50px",
+      				width : "100%"
+      			}
+      		},{
+      			url : "sub/sub2.html",
+      			id  : "sub/sub2.html",
+      			styles : {
+      				top:"44px",
+      				bottom : "50px",
+      				width : "100%",
+      				left : "100%"
+      			}
+      		},{
+      			url : "sub/sub3.html",
+      			id  : "sub/sub3.html",
+      			styles : {
+      				top:"44px",
+      				bottom : "50px",
+      				width : "100%",
+      				left : "200%"
+      			}
+      		},{
+      			url : "sub/sub4.html",
+      			id  : "sub/sub4.html",
+      			styles : {
+      				top:"44px",
+      				bottom : "50px",
+      				width : "100%",
+      				left:"300%"
+      			}
+      		},{
+      			url : "sub/sub5.html",
+      			id  : "sub/sub5.html",
+      			styles : {
+      				top:"44px",
+      				bottom : "50px",
+      				width : "100%",
+      				left:"400%"
+      			}
+      		}]
+      	});
+      	
+      	
+      	
+      	document.getElementById("sub1").addEventListener('tap',function(){changeSub(0);/*changeTitle(1);*/});
+      	document.getElementById("sub2").addEventListener('tap',function(){changeSub(1);/*changeTitle(1);*/});
+      	document.getElementById("sub3").addEventListener('tap',function(){changeSub(2);/*changeTitle(1);*/});
+      	document.getElementById("sub4").addEventListener('tap',function(){changeSub(3);/*changeTitle(1);*/});
+      	document.getElementById("sub5").addEventListener('tap',function(){changeSub(4);/*changeTitle(2);*/});
+      	
+      	
+      	
+      	//封装子页面切换函数
+      	function changeSub(index){
+      		//0    0    100%   200%  300%
+      		//1  -100%   0     100%  200%
+      		//2  -200%  -100    0    100%
+      		
+      		var  sub1 = plus.webview.getWebviewById("sub/sub1.html");
+      		var  sub2 = plus.webview.getWebviewById("sub/sub2.html");
+      		var  sub3 = plus.webview.getWebviewById("sub/sub3.html");
+      		var  sub4 = plus.webview.getWebviewById("sub/sub4.html");
+      		var  sub5 = plus.webview.getWebviewById("sub/sub5.html");
+      		
+      		sub1.setStyle({left:(0-index)*100+"%"});
+      		sub2.setStyle({left:(1-index)*100+"%"});
+      		sub3.setStyle({left:(2-index)*100+"%"});
+      		sub4.setStyle({left:(3-index)*100+"%"});
+      		sub5.setStyle({left:(4-index)*100+"%"});
+      	}
+      	function changeTitle(index){
+      		if (index == 1) {
+      			mui('#title1').show().next().hide();
+      		}else{
+      			mui('#title2').show().prev().hide();
+      		}
+      		
+      	}
+      	
+      	mui.plusReady(function(){
+      		plus.storage.removeItem('uid');
+      	})
+    </script>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/my.js"></script>
+	</head>
+		<style type="text/css">
+			.icon {
+			   width: 1em; height: 1em;
+			   vertical-align: -0.15em;
+			   fill: currentColor;
+			   overflow: hidden;
+			}
+			.lastText{
+				position: relative;
+				top: -2px;
+				margin-left: 10px;
+			}
+		</style>
+	<script type="text/javascript" src="../js/iconfont.js"></script>
+
+	<body>
+		<div class="mui-content">
+			<ul class="mui-table-view" style="margin: 10px 0px 10px 0;">
+		        <li class="mui-table-view-cell mui-media">
+		            <a href="#sheet1">
+		                <img class="mui-media-object mui-pull-left" src="../img/nologin.png" id="face">
+		                <div class="mui-media-body">
+		                    <span id="name">点击右上角登录</span>
+		                    <p class="mui-ellipsis">个性签名</p>
+		                </div>
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view" style="margin: 15px 0px 15px 0;">
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+		                <span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-wallet"></use>
+							</svg>
+				        </span>
+				        <span class="lastText">钱包</span>
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view">
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate-right" id="yaoyiyao">
+				        <span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-notebook"></use>
+							</svg>
+				        </span>
+				        <span class="lastText">摇一摇</span>
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate-right">
+		                <span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-photo"></use>
+							</svg>
+				        </span>
+				        <span class="lastText">我的图片</span>                                                            
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell">
+		        	<a class="mui-navigate-right">
+		            	<span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-iPad"></use>
+							</svg>
+				    	</span>
+				        <span class="lastText">我的手机</span>
+				    </a>
+		        </li>
+		        <li class="mui-table-view-cell">
+		            <a class="mui-navigate-right">
+		                <span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-play"></use>
+							</svg>
+				    	</span>
+				        <span class="lastText">热门游戏</span>                          
+		                                                     
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view" style="margin: 15px 0px 15px 0;">
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right" id="setting">
+		                <span class="mui-icon">
+				        	<svg class="icon" aria-hidden="true">
+							  <use xlink:href="#icon-setting"></use>
+							</svg>
+				        </span>
+				        <span class="lastText">设置</span>
+		            </a>
+		        </li>
+		    </ul>
+		</div>
+		<div id="sheet1" class="mui-popover mui-popover-bottom" style="width: 100px;z-index: 999999;">
+			<!-- 可选择菜单 -->
+			<ul class="mui-table-view">
+			    <li class="mui-table-view-cell">
+			       <a href="javascript:wxlogin();">微信登录</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			       <a href="javascript:qqlogin();">QQ登录</a>
+			    </li>
+			</ul>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function(){
+			
+				mui('#face')[0].src = plus.storage.getItem('uface');
+				mui('#name')[0].innerHTML = plus.storage.getItem('uname');
+			
+		//切换列表		
+				var _self,_next,_index;
+				
+				_self  = plus.webview.currentWebview();
+				_prev  = plus.webview.getWebviewById('sub/sub4.html');
+				_index = plus.webview.getLaunchWebview();
+				
+				_self.drag({
+					direction:'right',
+					moveMode:'followFinger'
+				},{
+					view:_prev,
+					moveMode:'follow'
+				},function(e){
+					console.log(JSON.stringify(e));
+					if ( e.type=='end' && e.result ) {
+						_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#sub4").addClass("mui-active");');
+					}
+				})
+				
+				
+				
+			})
+			mui('#yaoyiyao')[0].addEventListener('tap',function(){
+				mui.openWindow({
+					url:"yaoyiyao.html",
+					id :"sub/yaoyiyao.html"
+				});
+			})
+			mui('#setting')[0].addEventListener('tap',function(){
+				mui.openWindow({
+						url:"setting.html",
+						id :"sub/info.html"
+				});
+			})
+		</script>
+	</body>
+
+</html>

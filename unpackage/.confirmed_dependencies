@@ -1,0 +1,85 @@
+{
+	"index.html": {
+		"resources": [
+			"sub/sub1.html",
+			"js/iconfont.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/iconfont.css",
+			"css/mui.css",
+			"js/h.js"
+		],
+		"refer": [
+			"sub/sub1.html",
+			"sub/sub4.html",
+			"sub/sub2.html",
+			"sub/sub3.html",
+			"sub/sub5.html"
+		]
+	},
+	"sub/sub1.html": {
+		"resources": [
+			"js/iconfont.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.css",
+			"img/140-15031G02Q2.jpg",
+			"img/563b15ec4b391.jpg",
+			"img/1a41fd87352c96d4.jpg",
+			"img/140-1501160U953.jpg"
+		],
+		"refer": [
+			"sub/info.html"
+		]
+	},
+	"sub/sub5.html": {
+		"resources": [
+			"img/nologin.png",
+			"js/iconfont.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.css",
+			"js/my.js"
+		],
+		"refer": [
+			"sub/setting.html",
+			"sub/yaoyiyao.html"
+		]
+	},
+	"sub/setting.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/my.js",
+			"fonts/mui.ttf"
+		]
+	},
+	"sub/info.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.css",
+			"fonts/mui.ttf",
+			"img/20171024152056.png"
+		]
+	},
+	"sub/sub2.html": {
+		"resources": [
+			"js/iconfont.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.css"
+		]
+	},
+	"sub/sub3.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.css"
+		]
+	},
+	"sub/sub4.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.css"
+		]
+	}
+}

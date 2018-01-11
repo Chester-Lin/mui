@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.css" rel="stylesheet" />
+	</head>
+		<style type="text/css">
+			.icon {
+			   width: 1em; height: 1em;
+			   vertical-align: -0.15em;
+			   fill: currentColor;
+			   overflow: hidden;
+			}
+		</style>
+		<script type="text/javascript" src="../js/iconfont.js"></script>
+	<body>
+		<!--下拉刷新容器-->
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		  <div class="mui-scroll">
+		    <!--数据列表-->
+		    <ul class="mui-table-view mui-table-view-chevron" id="newsListUI">
+		      
+		    </ul>
+		  </div>
+		</div>
+				
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			var page = null;	
+			
+			mui.init({
+			  pullRefresh : {
+			    container:"#refreshContainer",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+			    down : {
+			      height:50,//可选,默认50.触发下拉刷新拖动距离,
+			      auto: true,//可选,默认false.首次加载自动下拉刷新一次
+			      contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+			      contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+			      contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+			      callback :getList //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			    },
+			    up : {
+			      height:50,//可选.默认50.触发上拉加载拖动距离
+			      auto:false,//可选,默认false.自动上拉加载一次
+			      contentrefresh : "正在加载...",//可选，正在加载状态时，上拉加载控件上显示的标题内容
+			      contentnomore:'没有更多数据了',//可选，请求完毕若没有更多数据时显示的提醒内容；
+			      callback :getMore //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+			    }
+			  }
+			});
+	//获取第一页新闻列表		
+			function getList(){
+				page = 1
+				mui.ajax({
+					"url":"http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page=1",
+					"type":"GET",
+					success:function(data){						
+				//将字符串转换成数组
+						var oInfo=data.split("--hcSplitor--");
+						var str = '';
+				// 向 变量中添加网页内容
+						for (var i = 0;i<oInfo.length;i++) {
+							var now=oInfo[i].split("--hcListSplitor--");							
+							str += '<li class="mui-table-view-cell mui-media"><a href="javascript:showInfo('+now[0]+')"><img class="mui-media-object mui-pull-left" src="'+now[1]+'"><div class="mui-media-body">'+now[2]+'<p class="mui-ellipsis">'+now[3]+'</p></div></a></li>';	
+						}
+						mui("#newsListUI")[0].innerHTML = str;
+						mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+						mui('#refreshContainer').pullRefresh().refresh(true);
+						page++;
+					},
+					error:function(xhr,type,errorThrown){
+						mui.toast(type);
+					}
+				});
+			}
+	
+	//获取更多数据
+
+			function getMore(){
+			//	console.log(page);
+				_self = this;
+				mui.ajax({
+					"url":"http://hoa.hcoder.net/index.php?user=hcoder&pwd=hcoder&m=mediaList&page="+page,
+					"type":"GET",
+					success:function(data){	
+						if (data == 'null') {
+							_self.endPullupToRefresh(true);
+							return false;
+						}
+				//将字符串转换成数组
+						var oInfo=data.split("--hcSplitor--");
+				// 向 变量中添加网页内容
+						for (var i = 0;i<oInfo.length;i++) {
+							var now = oInfo[i].split("--hcListSplitor--");	
+							var li  = document.createElement('li');
+							li.setAttribute('class','mui-table-view-cell mui-media');							
+							li.innerHTML = '<a href="javascript:showInfo('+now[0]+')"><img class="mui-media-object mui-pull-left" src="'+now[1]+'"><div class="mui-media-body">'+now[2]+'<p class="mui-ellipsis">'+now[3]+'</p></div></a>';	
+							mui("#newsListUI")[0].appendChild(li);
+						}
+						_self.endPullupToRefresh(false);
+						page++;
+					},
+					error:function(xhr,type,errorThrown){
+						mui.toast(type);
+					}
+				});
+			}
+	
+			mui.plusReady(function(){
+		
+		//左右滑动切换窗口
+				var _self,_next,_index;
+				_self  = plus.webview.currentWebview();
+				_prev  = plus.webview.getWebviewById("sub/sub1.html");
+				_next  = plus.webview.getWebviewById("sub/sub3.html");
+				_index = plus.webview.getLaunchWebview();
+		//左滑切换右边窗口		
+				_self.drag({
+					direction:"left",
+					moveMode:"followFinger"
+				},{
+					view:_next,
+					moveMode:"follow"
+				},function(e){
+					console.log(JSON.stringify(e));
+					if ( e.type=='end' && e.result ) {
+						_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#sub3").addClass("mui-active");');
+					}
+				})
+		//右滑切换左边窗口			
+				_self.drag({
+					direction:"right",
+					moveMode:"followFinger"
+				},{
+					view:_prev,
+					moveMode:"follow"
+				},function(e){
+					console.log(JSON.stringify(e));
+					if ( e.type=='end' && e.result ) {
+						_index.evalJS('h("#navFooter").find("a").removeClass("mui-active");h("#sub1").addClass("mui-active");');
+					}
+				})
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/my.js"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #87cefa;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title" style="color:#2E3092;">设置</h1>
+		</header>
+		<div class="mui-content">
+		    <ul class="mui-table-view" style="margin: 15px 0px 20px 0;">
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+				        <span class="lastText">账号与安全</span>
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view">
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+				        <span class="lastText">新消息通知</span>
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+				        <span class="lastText">隐私</span>
+		            </a>
+		        </li>
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+				        <span class="lastText">通用</span>
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view" style="margin: 10px 0;">
+		        <li class="mui-table-view-cell mui-media">
+		            <a>
+				        <span class="lastText">夜间模式</span>
+		            </a>
+		            <div class="mui-switch mui-switch-mini" id="nightmode">
+		              <div class="mui-switch-handle"></div>
+		            </div>
+		        </li>
+		        <li class="mui-table-view-cell mui-media">
+		            <a class="mui-navigate-right">
+				        <span class="lastText">关于app</span>
+		            </a>
+		        </li>
+		    </ul>
+		    <ul class="mui-table-view" style="margin: 10px 0;">
+		        <li class="mui-table-view-cell mui-media mui-text-center">
+		            <a href="javascript:logOut();">
+				        <span class="lastText">退出登录</span>
+		            </a>
+		        </li>
+		    </ul>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			mui.plusReady(function(){
+				mui("#nightmode")[0].addEventListener('toggle',function(){
+					var isActive = document.getElementById("nightmode").classList.contains("mui-active");
+						if(isActive){
+						  plus.screen.setBrightness(0.1);
+						  console.log('1');
+						}else{
+						  plus.screen.setBrightness(0.6); 
+						}
+				})
+				
+				
+			})
+			
+		</script>
+	</body>
+
+</html>
